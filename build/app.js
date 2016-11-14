@@ -41,6 +41,7 @@ catch (e) {
 let sentence = argv.slice(2).join(" ");
 var patterns = [];
 patterns.push({ re: /^(go[ ]?to|jump[ ]?to) (.+)$/, handler: onGoto });
+patterns.push({ re: /^(forget|forgot|delete|remove) (.+)$/, handler: onForget });
 patterns.push({ re: /^(remember|record|note|save|memo) (['"]?.+['"]?) (as)? (['"]?.+?['"]?)$/, handler: onRemember });
 patterns.push({ re: /^where[ ]?is[ ]?(.+)$/, handler: onWhere });
 patterns.push({ re: /^google (.+)$/, handler: onGoogle });
@@ -54,6 +55,17 @@ function onGoto(result) {
     else {
         console.log(`Jumping to ${path}`);
         process.chdir(path);
+    }
+}
+function onForget(result) {
+    let key = result[2];
+    let path = C.shortcut[key];
+    if (!path) {
+        console.log(`${key} means nothing to me.`);
+    }
+    else {
+        console.log(`OK, I'll forget ${key} (${path})`);
+        delete C.shortcut[key];
     }
 }
 function onRemember(result) {

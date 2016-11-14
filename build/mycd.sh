@@ -1,4 +1,4 @@
-newFolder="t"
+newFolder=""
 
 while IFS= read line
 do
@@ -7,7 +7,7 @@ do
     then
         newFolder=${line:3}
     fi
-done < <(kai-real $@)
+done < <(kai2js $@)
 
 if [ ! "$newFolder" == "" ]
 then

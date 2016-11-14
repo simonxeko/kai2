@@ -54,6 +54,7 @@ var patterns: Array<IPattern> = [];
 
 // Basic Module ( shortcut and note memory )
 patterns.push({ re: /^(go[ ]?to|jump[ ]?to) (.+)$/, handler: onGoto });
+patterns.push({ re: /^(forget|forgot|delete|remove) (.+)$/, handler: onForget });
 patterns.push({ re: /^(remember|record|note|save|memo) (['"]?.+['"]?) (as)? (['"]?.+?['"]?)$/, handler: onRemember }); // kai remember here as 'webdev' -> kai goto webdev
 patterns.push({ re: /^where[ ]?is[ ]?(.+)$/, handler: onWhere });
 
@@ -72,6 +73,19 @@ function onGoto(result) {
     } else {
         console.log(`Jumping to ${path}`);
         process.chdir(path);
+    }
+}
+
+
+function onForget(result) {
+    let key = result[2];
+    let path = C.shortcut[key];
+
+    if (!path) {
+        console.log(`${key} means nothing to me.`);
+    } else {
+        console.log(`OK, I'll forget ${key} (${path})`);
+        delete C.shortcut[key];
     }
 }
 
