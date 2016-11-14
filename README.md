@@ -1,6 +1,6 @@
 # Kai2
 
-Finally, something make your Bash smarter, and it's managed by npm!
+Time is money. Kai makes your Bash smarter and save your time.
 
 # Install
 
@@ -16,10 +16,12 @@ source kai2install
 
 # Usage
 
-### Cross directory shortcut
+### Directory shortcut memory
 ```bash
 $ kai remember . as apache config
 $ kai go to apache config 
+
+$ kai forget apache config
 ```
 
 ### Google (this will open a new window)
