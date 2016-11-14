@@ -25,8 +25,14 @@ $ kai forget apache config
 ```
 
 ### Searching
+Open a new browser window
 ```bash
 $ kai google how to make a cake
+```
+
+Stackoverflow in terminal, powered by google search
+```bash
+$ kai stack get pid of process name os x 
 ```
 
 ### Entertaining
@@ -37,6 +43,12 @@ $ kai tell me a joke
 ### Verbose mode (for debugging)
 ```bash
 $ kai tell me a joke -v
+```
+
+### Using API
+```bash
+$ kai set key google_api_key = [ your google api key ]
+$ kai unset key google_api_key = [ your google api key ]
 ```
 
 # Compiling

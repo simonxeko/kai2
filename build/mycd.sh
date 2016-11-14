@@ -11,7 +11,7 @@ done < <(kai2js $@)
 
 if [ "$newFolder" == "" ]
 then
-    echo ""
+    n=1
 else
     cd "$newFolder"
 fi

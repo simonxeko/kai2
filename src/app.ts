@@ -8,6 +8,7 @@ const os = require('os');
 const shell = require("shelljs");
 const fetch = require('node-fetch');
 const spawn = require('child_process').spawn;
+const cheerio = require('cheerio');
 const argv = process.argv;
 let verbose = false;
 let debug = (str: String) => {
@@ -57,9 +58,11 @@ patterns.push({ re: /^(go[ ]?to|jump[ ]?to) (.+)$/, handler: onGoto });
 patterns.push({ re: /^(forget|forgot|delete|remove) (.+)$/, handler: onForget });
 patterns.push({ re: /^(remember|record|note|save|memo) (['"]?.+['"]?) (as)? (['"]?.+?['"]?)$/, handler: onRemember }); // kai remember here as 'webdev' -> kai goto webdev
 patterns.push({ re: /^where[ ]?is[ ]?(.+)$/, handler: onWhere });
+patterns.push({ re: /^(set key|unset key|get key) ([^ ]+)[ ]?[=]?[ ]?(.*)$/, handler: onSet });
 
 // Google
 patterns.push({ re: /^google (.+)$/, handler: onGoogle });
+patterns.push({ re: /^(stackoverflow|stack) (.+)$/, handler: onStackoverflow });
 
 // Joke Module
 patterns.push({ re: /^tell me a joke$/, handler: onJoke });
@@ -119,6 +122,53 @@ function onJoke(result) {
     }).then(function(json) {
         console.log(json.joke);
     });
+}
+
+function onSet(result){
+    let cmd = result[1],
+        key = result[2],
+        val = result[3];
+    
+    if (!C.keys) { C.keys = {}; }
+    if (!~['google_cx', 'google_api_key'].indexOf(key)) {
+        console.log("Key ${key} not supported");
+    }
+
+    if (cmd == "unset key") {
+        delete C.keys[key];
+        console.log(`Key ${key} deleted.`);
+    } else if(cmd=="get key") {
+        console.log(`Key "${key}" = "${C.keys[key]}".`);
+    } else if(val && cmd == "set key") {
+        C.keys[key] = val;
+        console.log(`Setting "${key}" = "${val}".`);
+    }
+
+}
+
+function onStackoverflow(result){
+    let parsingLink = false;
+    let linkName = "";
+    let pageLink = "";
+
+    if (!C.keys || !C.keys['google_cx'] || !C.keys['google_api_key']) {
+        return console.log('You must run `kai set google_cx = [your custom search engine index]` & `kai set google_api_key = [your google api key]` first. See https://developers.google.com/custom-search/json-api/v1/overview.');
+    }
+
+    let url = `https://www.googleapis.com/customsearch/v1?q=${encodeURIComponent(result[2])}&cx=${C.keys['google_cx']}&key=${C.keys['google_api_key']}`;
+    console.log("By the power of " + "Google".rainbow + " ...\n");
+    fetch(url).then((res) => {
+        return res.json();
+    }).then((result)=>{
+        result.items.map((v, i) => {
+            if (i!=0) return;
+            console.log(`*** ${v.title} ***`);
+            fetch(v.link).then(res => res.text()).then((html) => {
+                let $ = cheerio.load(html);
+                console.log($('.answer.accepted-answer .post-text').text());
+            });
+        });
+    })
 }
 
 debug("Sentence " + sentence);

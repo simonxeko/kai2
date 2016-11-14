@@ -8,8 +8,10 @@
     "kai2install": "build/install.sh"
   },
   "dependencies": {
+    "cheerio": "^0.22.0",
     "colors": "^1.1.2",
     "debug": "^2.3.2",
+    "htmlparser2": "^3.9.2",
     "node-fetch": "^1.6.3",
     "shelljs": "^0.7.5"
   },
