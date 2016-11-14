@@ -3,7 +3,6 @@
 Finally, something make your command line smarter, and managed by npm.
 
 # Install
-
 ```bash
 npm install kai2
 ```
@@ -12,11 +11,11 @@ npm install kai2
 
 ### Cross directory shortcut
 ```bash
-$ kai remember here as apache config
-$ kai go to apache config
+$ kai remember . as apache config
+$ kai go to apache config 
 ```
 
-### Google (this opens a new window)
+### Google (this will open a new window)
 ```bash
 $ kai google how to make a cake
 ```
