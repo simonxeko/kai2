@@ -54,7 +54,7 @@ function onGoto(result) {
     }
     else {
         console.log(`Jumping to ${path}`);
-        process.chdir(path);
+        console.log(`cd ${path}`);
     }
 }
 function onForget(result) {

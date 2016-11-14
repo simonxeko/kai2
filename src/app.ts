@@ -72,7 +72,7 @@ function onGoto(result) {
         console.log(`I don't know where ${key} is.`);
     } else {
         console.log(`Jumping to ${path}`);
-        process.chdir(path);
+        console.log(`cd ${path}`);
     }
 }
 

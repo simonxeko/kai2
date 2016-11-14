@@ -9,7 +9,9 @@ do
     fi
 done < <(kai2js $@)
 
-if [ ! "$newFolder" == "" ]
+if [ "$newFolder" == "" ]
 then
+    echo ""
+else
     cd "$newFolder"
 fi
