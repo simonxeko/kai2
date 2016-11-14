@@ -12,6 +12,7 @@ npm install kai2
 Bind it with your bash
 ```bash
 echo "alias kai='source kai2sh'" >> ~/.bashrc
+source ~/.bashrc
 ```
 
 # Usage
