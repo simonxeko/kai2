@@ -1,6 +1,6 @@
 {
   "name": "kai2",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "bin": {
     "kai2js": "build/app.js",
     "kai2sh": "build/mycd.sh"
