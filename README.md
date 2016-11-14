@@ -2,7 +2,7 @@
 
 Time is money. Kai makes your Bash smarter and save your time.
 
-# Install
+# Installation
 
 Install the tool
 ```bash
@@ -16,7 +16,7 @@ source kai2install
 
 # Usage
 
-### Directory shortcut memory
+### Path remembering
 ```bash
 $ kai remember . as apache config
 $ kai go to apache config 
@@ -24,12 +24,12 @@ $ kai go to apache config
 $ kai forget apache config
 ```
 
-### Google (this will open a new window)
+### Searching
 ```bash
 $ kai google how to make a cake
 ```
 
-### Entertainment
+### Entertaining
 ```bash
 $ kai tell me a joke
 ```
@@ -39,16 +39,16 @@ $ kai tell me a joke
 $ kai tell me a joke -v
 ```
 
-# Build
+# Compiling
 
 This library is written in typescript. So you need to install a bundle of packages to start.
 
-### Initiating packages
+### Installing dependencies
 ```bash
 $ npm i
 ```
 
-### Compiling typescripts
+### Building typescripts
 ```bash
 $ gulp
 ```
