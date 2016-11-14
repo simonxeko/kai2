@@ -1,5 +1,8 @@
 ### TODO Commands
 
+### Install plugin with npm packages
+$ kai install kai-twitter
+
 ### Save command
 ```bash
 $ kai remember command 'service start nginx' as nginx

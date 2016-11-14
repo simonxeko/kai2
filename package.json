@@ -2,6 +2,7 @@
   "name": "kai2",
   "version": "1.1.0",
   "homepage": "https://github.com/simonxeko/kai2",
+  "description": "Siri for terminal. Save your time and money.",
   "bin": {
     "kai2js": "build/app.js",
     "kai2sh": "build/mycd.sh",
