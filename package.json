@@ -1,6 +1,6 @@
 {
   "name": "kai2",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "homepage": "https://github.com/simonxeko/kai2",
   "bin": {
     "kai2js": "build/app.js",
