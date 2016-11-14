@@ -2,5 +2,3 @@ node_modules
 npm-debug.log
 
 build/app.js.map
-
-build/app.js.map

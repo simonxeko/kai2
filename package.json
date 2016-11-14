@@ -2,8 +2,8 @@
   "name": "kai2",
   "version": "1.0.4",
   "bin": {
-    "kai-real": "build/app.js",
-    "kai2": "build/mycd.sh"
+    "kai2js": "build/app.js",
+    "kai2sh": "build/mycd.sh"
   },
   "dependencies": {
     "colors": "^1.1.2",

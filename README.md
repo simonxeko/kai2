@@ -1,10 +1,17 @@
 # Kai2
 
-Finally, something make your command line smarter, and managed by npm.
+Finally, something make your bash smarter, and it's managed by npm.
 
 # Install
+
+Install the tool
 ```bash
 npm install kai2
+```
+
+Bind it with your bash
+```bash
+echo "alias kai='source kai2sh'" >> ~/.bashrc
 ```
 
 # Usage
