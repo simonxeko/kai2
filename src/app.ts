@@ -6,7 +6,19 @@ const fs = require('fs');
 const colors = require('colors');
 const os = require('os');
 const shell = require("shelljs");
+const fetch = require('node-fetch');
+const spawn = require('child_process').spawn;
 const argv = process.argv;
+let verbose = false;
+let debug = (str: String) => {
+    if (verbose) {
+        console.log(str.grey);
+    }
+}
+if (argv.indexOf('-v') > 0) {
+    verbose = true;
+    argv.splice(argv.indexOf('-v'),1);
+}
 
 const USER_HOME = os.homedir();
 let C: any = {};
@@ -84,14 +96,18 @@ function onWhere(result) {
 }
 
 function onGoogle(result) {
-
+    spawn('open', ['https://www.google.com.tw/webhp?ie=UTF-8#q='+encodeURIComponent(result[1])]);
 }
 
 function onJoke(result) {
-
+    fetch('http://tambal.azurewebsites.net/joke/random').then(function(res) {
+        return res.json();
+    }).then(function(json) {
+        console.log(json.joke);
+    });
 }
 
-console.log("user enter", sentence);
+debug("Sentence " + sentence);
 
 let matches:Array<{result: RegExpExecArray, pattern: IPattern}> = [];
 
@@ -103,11 +119,11 @@ patterns.map((v: IPattern) => {
 });
 
 if (matches.length > 1) {
-    console.log("DEBUG:: Command matched twice".red);
+    debug("DEBUG:: Command matched twice".red);
 }
 
 matches.map((v: {result: RegExpExecArray, pattern: IPattern}) => {
-    console.log("Matched " + v.pattern.re.source);
+    debug("Matched " + v.pattern.re.source);
     v.pattern.handler(v.result);
 });
 

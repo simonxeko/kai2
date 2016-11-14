@@ -1,12 +1,16 @@
 {
   "name": "kai2",
   "version": "1.0.5",
+  "homepage": "https://github.com/simonxeko/kai2",
   "bin": {
     "kai2js": "build/app.js",
-    "kai2sh": "build/mycd.sh"
+    "kai2sh": "build/mycd.sh",
+    "kai2install": "build/install.sh"
   },
   "dependencies": {
     "colors": "^1.1.2",
+    "debug": "^2.3.2",
+    "node-fetch": "^1.6.3",
     "shelljs": "^0.7.5"
   },
   "devDependencies": {

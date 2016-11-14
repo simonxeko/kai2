@@ -1,6 +1,6 @@
 # Kai2
 
-Finally, something make your bash smarter, and it's managed by npm.
+Finally, something make your Bash smarter, and it's managed by npm!
 
 # Install
 
@@ -9,10 +9,9 @@ Install the tool
 npm install kai2
 ```
 
-Bind it with your bash
+Bind it with your Bash client
 ```bash
-echo "alias kai='source kai2sh'" >> ~/.bashrc
-source ~/.bashrc
+source kai2install
 ```
 
 # Usage
@@ -31,6 +30,11 @@ $ kai google how to make a cake
 ### Entertainment
 ```bash
 $ kai tell me a joke
+```
+
+### Verbose mode (for debugging)
+```bash
+$ kai tell me a joke -v
 ```
 
 # Build

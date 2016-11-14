@@ -5,7 +5,19 @@ const fs = require('fs');
 const colors = require('colors');
 const os = require('os');
 const shell = require("shelljs");
+const fetch = require('node-fetch');
+const spawn = require('child_process').spawn;
 const argv = process.argv;
+let verbose = false;
+let debug = (str) => {
+    if (verbose) {
+        console.log(str.grey);
+    }
+};
+if (argv.indexOf('-v') > 0) {
+    verbose = true;
+    argv.splice(argv.indexOf('-v'), 1);
+}
 const USER_HOME = os.homedir();
 let C = {};
 let initJSON = "";
@@ -40,8 +52,8 @@ function onGoto(result) {
         console.log(`I don't know where ${key} is.`);
     }
     else {
-        console.log('Jumping to ' + (path.cyan));
-        console.log(`cd ${path}`);
+        console.log(`Jumping to ${path}`);
+        process.chdir(path);
     }
 }
 function onRemember(result) {
@@ -65,12 +77,16 @@ function onWhere(result) {
     }
 }
 function onGoogle(result) {
+    spawn('open', ['https://www.google.com.tw/webhp?ie=UTF-8#q=' + encodeURIComponent(result[1])]);
 }
 function onJoke(result) {
+    fetch('http://tambal.azurewebsites.net/joke/random').then(function (res) {
+        return res.json();
+    }).then(function (json) {
+        console.log(json.joke);
+    });
 }
-
-console.log("user enter", sentence);
-
+debug("Sentence " + sentence);
 let matches = [];
 patterns.map((v) => {
     let result = v.re.exec(sentence);
@@ -79,10 +95,10 @@ patterns.map((v) => {
     }
 });
 if (matches.length > 1) {
-    console.log("DEBUG:: Command matched twice".red);
+    debug("DEBUG:: Command matched twice".red);
 }
 matches.map((v) => {
-    console.log("Matched " + v.pattern.re.source);
+    debug("Matched " + v.pattern.re.source);
     v.pattern.handler(v.result);
 });
 let endJSON = JSON.stringify(C);
