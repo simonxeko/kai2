@@ -163,5 +163,8 @@ let endJSON = JSON.stringify(C);
 if (initJSON != endJSON) {
     fs.writeFileSync(`${USER_HOME}/.kai/settings.json`, endJSON + "\n");
 }
+if (sentence == "") {
+    console.log("Hi! How may I help you? Checkout more information at https://github.com/simonxeko/kai2");
+}
 
 //# sourceMappingURL=app.js.map
