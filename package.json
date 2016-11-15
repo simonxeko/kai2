@@ -8,6 +8,10 @@
   "bugs": {
     "url": "https://github.com/simonxeko/kai2/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simonxeko/kai2"
+  },
   "bin": {
     "kai2js": "build/app.js",
     "kai2sh": "build/mycd.sh",
