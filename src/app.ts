@@ -39,11 +39,11 @@ try {
     } catch (eMkdir) {
 
     }
-    fs.writeFileSync(`${USER_HOME}/.kai/settings.json`, '{}');
-    C = {};
+    fs.writeFileSync(`${USER_HOME}/.kai/settings.json`, '{shortcut:{}}');
+    C = {shortcut:{}};
 }
 
-let sentence = argv.slice(2).join(" ");
+let sentence = argv.slice(2).map((v) => (v.replace(' ', '\\ '))).join(" ");
 
 interface IPattern {
     re: RegExp;
@@ -90,8 +90,8 @@ function onRun(result) {
         console.log(`I don't know what ${key} means.`);
     } else { 
         console.log(`Executing ${cmd}`.grey);
-        let cmd_token = cmd.split(' '); 
-        spawn(cmd_token[0], cmd_token.splice(1), { env: process.env, stdio: [0,1,2] })
+        let cmd_token = cmd.replace(/\\ /g,'\\\\space\\\\').split(' ').map((v)=>(v.replace(/\\\\space\\\\/g, ' ')));
+        spawn(cmd_token[0], cmd_token.splice(1), { env: process.env, stdio: [0,1,2] });
     }
 }
 
@@ -229,5 +229,9 @@ if (initJSON != endJSON) {
 if (sentence == "") {
     console.log("Hi! How may I help you? Checkout more information at https://github.com/simonxeko/kai2");
 } else if(matches.length == 0) {
-    console.log("I don't quite understand the command.");
+    if(C.shortcut[sentence]) {
+        console.log('Do you mean: "'+ ("kai run " + sentence).cyan +'"?')
+    } else {
+        console.log("I don't quite understand the command.");
+    }
 }
