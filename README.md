@@ -36,6 +36,11 @@ $ kai go to apache config
 $ kai forget apache config
 ```
 
+### Command memo
+$ kai remember command 'service start nginx' as nginx
+$ kai run nginx
+$ kai r nginx
+
 ### Searching
 Open a new browser window
 ```bash
