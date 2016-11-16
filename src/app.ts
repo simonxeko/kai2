@@ -219,6 +219,6 @@ if (initJSON != endJSON) {
 
 if (sentence == "") {
     console.log("Hi! How may I help you? Checkout more information at https://github.com/simonxeko/kai2");
-} else if(matches[0]) {
+} else if(matches.length == 0) {
     console.log("I don't quite understand the command.");
 }
