@@ -88,14 +88,9 @@ function onRun(result) {
     if (!cmd) {
         console.log(`I don't know what ${key} means.`);
     } else { 
-        console.log(`Executing ${cmd}`);
-        let child = shell.exec(cmd, {async: true});
-        child.stdout.on('data', (data) => {
-            console.log(data);
-        });
-        child.stderr.on('data', (data) => {
-            console.log(data);
-        });
+        console.log(`Executing ${cmd}`.grey);
+        let cmd_token = cmd.split(' '); 
+        spawn(cmd_token[0], cmd_token.splice(1), { env: process.env, stdio: [0,1,2] })
     }
 }
 
