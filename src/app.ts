@@ -23,7 +23,7 @@ if (argv.indexOf('-v') > 0) {
 }
 
 const USER_HOME = os.homedir();
-let C: any = {};
+let C: any = {shortcut: {}};
 let initJSON = "";
 
 try {
@@ -70,12 +70,37 @@ patterns.push({ re: /^(stackoverflow|stack) (.+)$/, handler: onStackoverflow });
 // Joke Module
 patterns.push({ re: /^tell me a joke$/, handler: onJoke });
 
+function fuzzySearch(query: string): Array<string>{
+    let result: Array<string> = [];
+    Object.keys(C.shortcut).map((i: string) => {
+        if(i.indexOf(query) == 0) {
+            result.push(i);
+        } else if (~i.split(' ').indexOf(query)) {
+            result.push(i);
+        }
+    });
+    return result.map(v => v.cyan);
+}
+
+function combineWords(words: Array<string>) {
+    if (words.length == 0) return '';
+    if (words.length == 1) { return words[0]; }
+    if (words.length == 2) { return words[0] + ' or ' + words[1]; }
+    let finalWord = words.pop();
+    return words.join(',') + ' or ' + finalWord;
+}
+
 function onGoto(result) {
     let key = result[2];
     let path = C.shortcut[key];
 
     if (!path) {
-        console.log(`I don't know where ${key} is.`);
+        let fuzzyResult = fuzzySearch(key);
+        if(fuzzyResult.length > 0){
+            console.log('Do you mean "kai go to' +(combineWords(fuzzyResult))+ '"?');
+        } else {
+            console.log(`I don't know where ${key} is.`);
+        }
     } else {
         console.log(`Jumping to ${path}`);
         fs.writeFileSync(`${USER_HOME}/.kai/cd`, path);
@@ -87,7 +112,12 @@ function onRun(result) {
     let cmd = C.shortcut[key];
 
     if (!cmd) {
-        console.log(`I don't know what ${key} means.`);
+        let fuzzyResult = fuzzySearch(key);
+        if(fuzzyResult.length > 0){
+            console.log('Do you mean "kai run ' +(combineWords(fuzzyResult))+ '"?');
+        } else {
+            console.log(`I don't know what ${key} means.`);
+        }
     } else { 
         console.log(`Executing ${cmd}`.grey);
         let cmd_token = cmd.replace(/\\ /g,'\\\\space\\\\').split(' ').map((v)=>(v.replace(/\\\\space\\\\/g, ' ')));
@@ -100,11 +130,19 @@ function onShow(result) {
     let note = C.shortcut[key];
 
     if (key == 'all') {
-        note = JSON.stringify(C.shortcut,null,2);
+        note = '';
+        Object.keys(C.shortcut).map((i) => {
+            note += i + ' => ' + C.shortcut[i] + '\r\n';
+        });
     }
 
     if (!note) {
-        console.log(`I don't know what ${key} means.`);
+        let fuzzyResult = fuzzySearch(key);
+        if(fuzzyResult.length > 0){
+            console.log('Do you mean "kai show ' +(combineWords(fuzzyResult))+ '"?');
+        } else {
+            console.log(`I don't know what ${key} means.`);
+        }
     } else { 
         console.log(note);
     }
