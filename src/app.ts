@@ -77,7 +77,7 @@ function onGoto(result) {
         console.log(`I don't know where ${key} is.`);
     } else {
         console.log(`Jumping to ${path}`);
-        console.log(`cd ${path}`);
+        fs.writeFileSync(`${USER_HOME}/.kai/cd`, path);
     }
 }
 

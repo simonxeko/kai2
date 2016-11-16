@@ -58,7 +58,7 @@ function onGoto(result) {
     }
     else {
         console.log(`Jumping to ${path}`);
-        console.log(`cd ${path}`);
+        fs.writeFileSync(`${USER_HOME}/.kai/cd`, path);
     }
 }
 function onRun(result) {

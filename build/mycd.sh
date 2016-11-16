@@ -1,13 +1,9 @@
 newFolder=""
 
-while IFS= read line
-do
-    echo "$line"
-    if [ "${line:0:3}" == "cd " ]
-    then
-        newFolder=${line:3}
-    fi
-done < <(kai2js $@)
+kai2js $@
+
+newFolder=$(cat $HOME/.kai/cd 2>/dev/null)
+rm "$HOME/.kai/cd" 2>/dev/null
 
 if [ "$newFolder" == "" ]
 then
