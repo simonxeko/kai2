@@ -1,5 +1,3 @@
-# Kai2
-
 ```
  ___  __    ________  ___    _______     
 |\  \|\  \ |\   __  \|\  \  /  ___  \    
@@ -18,7 +16,7 @@ Designed for programmers. Kai makes your Bash smarter and save your time.
 
 1. Switch working folder in an elegant way. 
 2. Save short memos in terminal.
-3. Save command alias quickly
+3. Save command alias quickly.
 4. Check stackoverflow in terminal.
 
 # Installation
