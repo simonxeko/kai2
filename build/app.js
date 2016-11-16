@@ -47,6 +47,7 @@ patterns.push({ re: /^(remember|record|note|save|memo) (['"]?.+['"]?) (as)? (['"
 patterns.push({ re: /^where[ ]?is[ ]?(.+)$/, handler: onWhere });
 patterns.push({ re: /^(set key|unset key|get key) ([^ ]+)[ ]?[=]?[ ]?(.*)$/, handler: onSet });
 patterns.push({ re: /^(run|exec|r|e) (.+)$/, handler: onRun });
+patterns.push({ re: /^(show) (.+)$/, handler: onShow });
 patterns.push({ re: /^google (.+)$/, handler: onGoogle });
 patterns.push({ re: /^(stackoverflow|stack) (.+)$/, handler: onStackoverflow });
 patterns.push({ re: /^tell me a joke$/, handler: onJoke });
@@ -71,6 +72,19 @@ function onRun(result) {
         console.log(`Executing ${cmd}`.grey);
         let cmd_token = cmd.split(' ');
         spawn(cmd_token[0], cmd_token.splice(1), { env: process.env, stdio: [0, 1, 2] });
+    }
+}
+function onShow(result) {
+    let key = result[2];
+    let note = C.shortcut[key];
+    if (key == 'all') {
+        note = JSON.stringify(C.shortcut);
+    }
+    if (!note) {
+        console.log(`I don't know what ${key} means.`);
+    }
+    else {
+        console.log(note);
     }
 }
 function onForget(result) {

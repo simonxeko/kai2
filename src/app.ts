@@ -61,6 +61,7 @@ patterns.push({ re: /^(remember|record|note|save|memo) (['"]?.+['"]?) (as)? (['"
 patterns.push({ re: /^where[ ]?is[ ]?(.+)$/, handler: onWhere });
 patterns.push({ re: /^(set key|unset key|get key) ([^ ]+)[ ]?[=]?[ ]?(.*)$/, handler: onSet });
 patterns.push({ re: /^(run|exec|r|e) (.+)$/, handler: onRun });
+patterns.push({ re: /^(show) (.+)$/, handler: onShow });
 
 // Google
 patterns.push({ re: /^google (.+)$/, handler: onGoogle });
@@ -94,7 +95,20 @@ function onRun(result) {
     }
 }
 
+function onShow(result) {
+    let key = result[2];
+    let note = C.shortcut[key];
 
+    if (key == 'all') {
+        note = JSON.stringify(C.shortcut,null,2);
+    }
+
+    if (!note) {
+        console.log(`I don't know what ${key} means.`);
+    } else { 
+        console.log(note);
+    }
+}
 
 function onForget(result) {
     let key = result[2];
