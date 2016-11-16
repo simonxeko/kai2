@@ -12,7 +12,14 @@
 
 [![NPM](https://nodei.co/npm/kai2.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/kai2/)
 
-Time is money. Kai makes your Bash smarter and save your time.
+Designed for programmers. Kai makes your Bash smarter and save your time.
+
+# Features
+
+1. Switch working folder in an elegant way. 
+2. Save short memos in terminal.
+3. Save command alias quickly
+4. Check stackoverflow in terminal.
 
 # Installation
 
@@ -37,9 +44,17 @@ $ kai forget apache config
 ```
 
 ### Command memo
+```
 $ kai remember command 'service start nginx' as nginx
 $ kai run nginx
 $ kai r nginx
+```
+
+### Variable memo
+```
+$ kai remember 192.168.21.136 as android ip
+$ kai show android ip
+```
 
 ### Searching
 Open a new browser window
