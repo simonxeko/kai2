@@ -10,6 +10,7 @@
     \|__| \|__|\|__|\|__|\|__| \|_______|
 ```
 
+[![NPM](https://nodei.co/npm/kai2.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/kai2/)
 
 Time is money. Kai makes your Bash smarter and save your time.
 

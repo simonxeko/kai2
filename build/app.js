@@ -46,6 +46,7 @@ patterns.push({ re: /^(forget|forgot|delete|remove) (.+)$/, handler: onForget })
 patterns.push({ re: /^(remember|record|note|save|memo) (['"]?.+['"]?) (as)? (['"]?.+?['"]?)$/, handler: onRemember });
 patterns.push({ re: /^where[ ]?is[ ]?(.+)$/, handler: onWhere });
 patterns.push({ re: /^(set key|unset key|get key) ([^ ]+)[ ]?[=]?[ ]?(.*)$/, handler: onSet });
+patterns.push({ re: /^(run|exec|r|e) (.+)$/, handler: onRun });
 patterns.push({ re: /^google (.+)$/, handler: onGoogle });
 patterns.push({ re: /^(stackoverflow|stack) (.+)$/, handler: onStackoverflow });
 patterns.push({ re: /^tell me a joke$/, handler: onJoke });
@@ -58,6 +59,23 @@ function onGoto(result) {
     else {
         console.log(`Jumping to ${path}`);
         console.log(`cd ${path}`);
+    }
+}
+function onRun(result) {
+    let key = result[2];
+    let cmd = C.shortcut[key];
+    if (!cmd) {
+        console.log(`I don't know what ${key} means.`);
+    }
+    else {
+        console.log(`Executing ${cmd}`);
+        let child = shell.exec(cmd, { async: true });
+        child.stdout.on('data', (data) => {
+            console.log(data);
+        });
+        child.stderr.on('data', (data) => {
+            console.log(data);
+        });
     }
 }
 function onForget(result) {
@@ -165,6 +183,9 @@ if (initJSON != endJSON) {
 }
 if (sentence == "") {
     console.log("Hi! How may I help you? Checkout more information at https://github.com/simonxeko/kai2");
+}
+else if (matches[0]) {
+    console.log("I don't quite understand the command.");
 }
 
 //# sourceMappingURL=app.js.map

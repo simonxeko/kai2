@@ -1,3 +1,4 @@
+import { REPLCommand } from 'repl';
 import { Cipher } from 'tls';
 import { version } from 'punycode';
 import * as vm from 'vm';
@@ -59,6 +60,7 @@ patterns.push({ re: /^(forget|forgot|delete|remove) (.+)$/, handler: onForget })
 patterns.push({ re: /^(remember|record|note|save|memo) (['"]?.+['"]?) (as)? (['"]?.+?['"]?)$/, handler: onRemember }); // kai remember here as 'webdev' -> kai goto webdev
 patterns.push({ re: /^where[ ]?is[ ]?(.+)$/, handler: onWhere });
 patterns.push({ re: /^(set key|unset key|get key) ([^ ]+)[ ]?[=]?[ ]?(.*)$/, handler: onSet });
+patterns.push({ re: /^(run|exec|r|e) (.+)$/, handler: onRun });
 
 // Google
 patterns.push({ re: /^google (.+)$/, handler: onGoogle });
@@ -78,6 +80,25 @@ function onGoto(result) {
         console.log(`cd ${path}`);
     }
 }
+
+function onRun(result) {
+    let key = result[2];
+    let cmd = C.shortcut[key];
+
+    if (!cmd) {
+        console.log(`I don't know what ${key} means.`);
+    } else { 
+        console.log(`Executing ${cmd}`);
+        let child = shell.exec(cmd, {async: true});
+        child.stdout.on('data', (data) => {
+            console.log(data);
+        });
+        child.stderr.on('data', (data) => {
+            console.log(data);
+        });
+    }
+}
+
 
 
 function onForget(result) {
@@ -198,4 +219,6 @@ if (initJSON != endJSON) {
 
 if (sentence == "") {
     console.log("Hi! How may I help you? Checkout more information at https://github.com/simonxeko/kai2");
+} else if(matches[0]) {
+    console.log("I don't quite understand the command.");
 }
